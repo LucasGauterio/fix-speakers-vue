@@ -1,0 +1,117 @@
+<template>
+  <v-app>
+    <v-container>
+      <v-row>
+        <v-col cols="12">
+          <v-select
+            id="language-dropdown"
+            v-model="$i18n.locale"
+            :items="languages"
+            label="Language"
+          ></v-select>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-btn id="play-button" @click="playAudio" :disabled="player.isPlaying()">
+            {{ $t('play') }}
+          </v-btn>
+          <v-btn id="pause-button" @click="pauseAudio" :disabled="!player.isPlaying()">
+            {{ $t('pause') }}
+          </v-btn>
+          <v-slider id="volume-slider" v-model="volume" @change="setVolume"></v-slider>
+          <v-icon id="volume-icon">{{ volumeIcon }}</v-icon>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-progress-linear id="progress-bar" v-if="player.isPlaying()" :value="progress"></v-progress-linear>
+          <span id="remaining-time" v-if="player.isPlaying()">{{ remainingTime }}</span>
+          <span id="total-duration">{{ totalDuration }}</span>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <span id="status-message">{{ statusMessage }}</span>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-app>
+</template>
+
+<script>
+import Player from './Player'
+
+export default {
+  name: 'App',
+  data() {
+    return {
+      player: new Player(),
+      volume: 50,
+      languages: ['en', 'pt', 'zh', 'hi', 'ja'],
+    }
+  },
+  computed: {
+    progress() {
+      return (this.player.getCurrentTime() / this.player.getDuration()) * 100
+    },
+    remainingTime() {
+      const remainingSeconds = Math.floor(this.player.getDuration() - this.player.getCurrentTime())
+      const minutes = Math.floor(remainingSeconds / 60)
+      const seconds = remainingSeconds % 60
+      return `-${minutes}:${seconds.toString().padStart(2, '0')}`
+    },
+    totalDuration() {
+      const totalSeconds = Math.floor(this.player.getDuration())
+      const minutes = Math.floor(totalSeconds / 60)
+      const seconds = totalSeconds % 60
+      return `${minutes}:${seconds.toString().padStart(2, '0')}`
+    },
+    volumeIcon() {
+      if (this.volume === 0) {
+        return 'mdi-volume-off'
+      } else if (this.volume < 50) {
+        return 'mdi-volume-medium'
+      } else {
+        return 'mdi-volume-high'
+      }
+    },
+    statusMessage() {
+      if (this.player.isPlaying()) {
+        return this.$t('playing')
+      } else {
+        return this.$t('finished')
+      }
+    },
+  },
+  methods: {
+    playAudio() {
+      this.player.play()
+    },
+    pauseAudio() {
+      this.player.pause()
+    },
+    setVolume() {
+      this.player.setVolume(this.volume / 100)
+    },
+  },
+}
+</script>
+
+<style>
+#play-button,
+#pause-button {
+  margin-right: 10px;
+}
+#volume-slider {
+  width: 100px;
+  margin-right: 10px;
+}
+#volume-icon {
+  margin-left: 10px;
+}
+#status-message {
+  margin-top: 10px;
+  font-weight: bold;
+}
+</style>

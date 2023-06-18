@@ -1,0 +1,280 @@
+Sure, here are the steps to implement the web application:
+
+Step 1: Create a new Vue.js project using Vite
+
+We will use Vite to create a new Vue.js project with Vuetify and vue-i18n pre-installed. To do this, run the following commands in your terminal:
+
+```
+npm init vite@latest my-app --template vue
+cd my-app
+npm install
+```
+
+This will create a new Vue.js project in a directory called `my-app` and install all the necessary dependencies.
+
+Step 2: Add Howler.js for audio playback
+
+We will use Howler.js for audio playback in our application. To install it, run the following command in your terminal:
+
+```
+npm install howler
+```
+
+Step 3: Create the Player class
+
+We will create a `Player` class that handles the playback of the mp3 file. Create a new file called `Player.js` in the `src` directory and add the following code:
+
+[Player.js]
+```javascript
+import { Howl } from 'howler'
+
+export default class Player {
+  constructor() {
+    this.sound = new Howl({
+      src: ['/audio/cleaner.mp3'],
+      preload: true,
+      volume: 0.5,
+      onend: () => {
+        this.isPlaying = false
+      },
+    })
+    this.isPlaying = false
+  }
+
+  play() {
+    this.sound.play()
+    this.isPlaying = true
+  }
+
+  pause() {
+    this.sound.pause()
+    this.isPlaying = false
+  }
+
+  setVolume(volume) {
+    this.sound.volume(volume)
+  }
+
+  getCurrentTime() {
+    return this.sound.seek()
+  }
+
+  getDuration() {
+    return this.sound.duration()
+  }
+
+  isPlaying() {
+    return this.isPlaying
+  }
+}
+```
+
+This class uses Howler.js to load and play the mp3 file. It also provides methods to control the playback, volume, and get the current time and duration of the audio.
+
+Step 4: Create the App component
+
+We will create a `App` component that renders the application. Create a new file called `App.vue` in the `src` directory and add the following code:
+
+[App.vue]
+```vue
+<template>
+  <v-app>
+    <v-container>
+      <v-row>
+        <v-col cols="12">
+          <v-select
+            id="language-dropdown"
+            v-model="$i18n.locale"
+            :items="languages"
+            label="Language"
+          ></v-select>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-btn id="play-button" @click="playAudio" :disabled="player.isPlaying()">
+            {{ $t('play') }}
+          </v-btn>
+          <v-btn id="pause-button" @click="pauseAudio" :disabled="!player.isPlaying()">
+            {{ $t('pause') }}
+          </v-btn>
+          <v-slider id="volume-slider" v-model="volume" @change="setVolume"></v-slider>
+          <v-icon id="volume-icon">{{ volumeIcon }}</v-icon>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-progress-linear id="progress-bar" v-if="player.isPlaying()" :value="progress"></v-progress-linear>
+          <span id="remaining-time" v-if="player.isPlaying()">{{ remainingTime }}</span>
+          <span id="total-duration">{{ totalDuration }}</span>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <span id="status-message">{{ statusMessage }}</span>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-app>
+</template>
+
+<script>
+import Player from './Player'
+
+export default {
+  name: 'App',
+  data() {
+    return {
+      player: new Player(),
+      volume: 50,
+      languages: ['en', 'pt', 'zh', 'hi', 'ja'],
+    }
+  },
+  computed: {
+    progress() {
+      return (this.player.getCurrentTime() / this.player.getDuration()) * 100
+    },
+    remainingTime() {
+      const remainingSeconds = Math.floor(this.player.getDuration() - this.player.getCurrentTime())
+      const minutes = Math.floor(remainingSeconds / 60)
+      const seconds = remainingSeconds % 60
+      return `-${minutes}:${seconds.toString().padStart(2, '0')}`
+    },
+    totalDuration() {
+      const totalSeconds = Math.floor(this.player.getDuration())
+      const minutes = Math.floor(totalSeconds / 60)
+      const seconds = totalSeconds % 60
+      return `${minutes}:${seconds.toString().padStart(2, '0')}`
+    },
+    volumeIcon() {
+      if (this.volume === 0) {
+        return 'mdi-volume-off'
+      } else if (this.volume < 50) {
+        return 'mdi-volume-medium'
+      } else {
+        return 'mdi-volume-high'
+      }
+    },
+    statusMessage() {
+      if (this.player.isPlaying()) {
+        return this.$t('playing')
+      } else {
+        return this.$t('finished')
+      }
+    },
+  },
+  methods: {
+    playAudio() {
+      this.player.play()
+    },
+    pauseAudio() {
+      this.player.pause()
+    },
+    setVolume() {
+      this.player.setVolume(this.volume / 100)
+    },
+  },
+}
+</script>
+
+<style>
+#play-button,
+#pause-button {
+  margin-right: 10px;
+}
+#volume-slider {
+  width: 100px;
+  margin-right: 10px;
+}
+#volume-icon {
+  margin-left: 10px;
+}
+#status-message {
+  margin-top: 10px;
+  font-weight: bold;
+}
+</style>
+```
+
+This component uses Vuetify to render the UI components and vue-i18n to handle internationalization. It also uses the `Player` class to handle the audio playback. The component provides methods to control the playback and volume, and computed properties to display the progress, remaining time, total duration, volume icon, and status message.
+
+Step 5: Create the i18n configuration
+
+We will create a configuration file for vue-i18n that defines the translations for the supported languages. Create a new file called `i18n.js` in the `src` directory and add the following code:
+
+[i18n.js]
+```javascript
+import { createI18n } from 'vue-i18n'
+
+const messages = {
+  en: {
+    play: 'Play',
+    pause: 'Pause',
+    playing: 'Playing and cleaning speakers...',
+    finished: 'Audio finished playing.',
+  },
+  pt: {
+    play: 'Reproduzir',
+    pause: 'Pausar',
+    playing: 'Reproduzindo e limpando os alto-falantes...',
+    finished: 'Áudio terminou de ser reproduzido.',
+  },
+  zh: {
+    play: '播放',
+    pause: '暂停',
+    playing: '正在播放并清洁扬声器...',
+    finished: '音频播放完毕。',
+  },
+  hi: {
+    play: 'चलाएँ',
+    pause: 'रोकें',
+    playing: 'चला रहा है और स्पीकर साफ कर रहा है...',
+    finished: 'ऑडियो समाप्त हो गया।',
+  },
+  ja: {
+    play: '再生',
+    pause: '一時停止',
+    playing: '再生中でスピーカーをクリーニングしています...',
+    finished: 'オーディオの再生が終了しました。',
+  },
+}
+
+const i18n = createI18n({
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages,
+})
+
+export default i18n
+```
+
+This file defines the translations for the supported languages and creates a new instance of vue-i18n.
+
+Step 6: Create the main entry point
+
+We will create the main entry point for the application that mounts the `App` component and sets up vue-i18n. Create a new file called `main.js` in the `src` directory and add the following code:
+
+[main.js]
+```javascript
+import { createApp } from 'vue'
+import App from './App.vue'
+import i18n from './i18n'
+
+createApp(App).use(i18n).mount('#app')
+```
+
+This file creates a new Vue.js app, mounts the `App` component to the `#app` element, and sets up vue-i18n.
+
+Step 7: Create the audio file
+
+Finally, we need to add the mp3 file that will be played by the application. Create a new directory called `public` in the root of the project and add a new directory called `audio` inside it. Download or create an mp3 file called `cleaner.mp3` and add it to the `audio` directory.
+
+Step 8: Run the application
+
+To run the application, run the following command in your terminal:
+
+```
+npm run dev
+```
+
+This will start a development server and open the application in your default browser. You should be able to select a language, play and pause the audio, adjust the volume, and see the progress, remaining time, total duration, volume icon, and status message.

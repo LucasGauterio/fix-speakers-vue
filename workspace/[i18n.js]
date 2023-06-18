@@ -1,0 +1,52 @@
+import { createI18n } from 'vue-i18n'
+
+const messages = {
+  en: {
+    play: 'Play',
+    pause: 'Pause',
+    playing: 'Playing and cleaning speakers...',
+    finished: 'Audio finished playing.',
+    warning: 'Warning! Don't wear earphones or point the speakers into your ears while the process is running, it can damage your hearing!',
+    turnup: 'Turn up the volume to max setting',
+  },
+  pt: {
+    play: 'Reproduzir',
+    pause: 'Pausar',
+    playing: 'Reproduzindo e limpando os alto-falantes...',
+    finished: 'Áudio terminou de ser reproduzido.',
+    warning: 'Aviso! Não use fones de ouvido ou aponte os alto-falantes para os ouvidos enquanto o processo estiver em execução, isso pode prejudicar sua audição!',
+    turnup: 'Aumente o volume para a configuração máxima',
+  },
+  zh: {
+    play: '播放',
+    pause: '暂停',
+    playing: '正在播放并清洁扬声器...',
+    finished: '音频播放完毕。',
+    warning: '警告！ 過程運行時不要戴耳機或將揚聲器對準耳朵，這會損害您的聽力！',
+    turnup: '將音量調到最大設置',
+  },
+  hi: {
+    play: 'चलाएँ',
+    pause: 'रोकें',
+    playing: 'चला रहा है और स्पीकर साफ कर रहा है...',
+    finished: 'ऑडियो समाप्त हो गया।',
+    warning: 'चेतावनी! जब प्रक्रिया चल रही हो तो ईयरफोन न पहनें या स्पीकर को अपने कानों में न लगाएं, यह आपकी सुनने की क्षमता को नुकसान पहुंचा सकता है!',
+    turnup: 'वॉल्यूम को अधिकतम सेटिंग में बदलें',
+  },
+  ja: {
+    play: '再生',
+    pause: '一時停止',
+    playing: '再生中でスピーカーをクリーニングしています...',
+    finished: 'オーディオの再生が終了しました。',
+    warning: '警告！ プロセスの実行中は、イヤホンを着用したり、スピーカーを耳に向けたりしないでください。聴覚に損傷を与える可能性があります。',
+    turnup: '音量を最大設定まで上げます',
+  },
+}
+
+const i18n = createI18n({
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages,
+})
+
+export default i18n

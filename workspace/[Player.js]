@@ -1,0 +1,41 @@
+import { Howl } from 'howler'
+
+export default class Player {
+  constructor() {
+    this.sound = new Howl({
+      src: ['/audio/cleaner.mp3'],
+      preload: true,
+      volume: 0.5,
+      onend: () => {
+        this.isPlaying = false
+      },
+    })
+    this.isPlaying = false
+  }
+
+  play() {
+    this.sound.play()
+    this.isPlaying = true
+  }
+
+  pause() {
+    this.sound.pause()
+    this.isPlaying = false
+  }
+
+  setVolume(volume) {
+    this.sound.volume(volume)
+  }
+
+  getCurrentTime() {
+    return this.sound.seek()
+  }
+
+  getDuration() {
+    return this.sound.duration()
+  }
+
+  isPlaying() {
+    return this.isPlaying
+  }
+}
