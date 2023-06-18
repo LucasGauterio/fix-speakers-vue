@@ -50,8 +50,6 @@ const messages = {
 
 let userLanguage = (navigator.language || navigator.userLanguage).substring(0,2);
 
-console.log('selected language', userLanguage);
-
 const i18n = createI18n({
   locale: userLanguage,
   fallbackLocale: 'en',

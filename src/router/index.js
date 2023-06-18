@@ -34,8 +34,6 @@ const router = createRouter({
 
 let userLanguage = (navigator.language || navigator.userLanguage).substring(0,2);
 
-console.log('selected language', userLanguage);
-
 router.beforeEach((to, from, next) => {
   const lang = to.params.lang || userLanguage;
 
