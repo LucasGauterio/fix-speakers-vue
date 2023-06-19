@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://fixspeakers.vercel.app</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://fixspeakers.vercel.app/en</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://fixspeakers.vercel.app/pt</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://fixspeakers.vercel.app/in</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://fixspeakers.vercel.app/zh</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://fixspeakers.vercel.app/jp</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://fixspeakers.vercel.app/privacypolicy.html</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://fixspeakers.vercel.app/en/privacypolicy.html</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://fixspeakers.vercel.app/pt/privacypolicy.html</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://fixspeakers.vercel.app/in/privacypolicy.html</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://fixspeakers.vercel.app/zh/privacypolicy.html</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://fixspeakers.vercel.app/jp/privacypolicy.html</loc>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>
