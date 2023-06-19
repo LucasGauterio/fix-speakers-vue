@@ -15,6 +15,12 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
       },
+    ],
+  },
+  {
+    path: '/:lang',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
       {
         path: '/:lang',
         name: 'Home Language',
