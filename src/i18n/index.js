@@ -2,6 +2,7 @@ import { createI18n } from 'vue-i18n';
 
 const messages = {
   en: {
+    privacy: 'Privacy Policy',
     title: 'Fix Speakers',
     play: 'Begin',
     stop: 'Stop',
@@ -11,6 +12,7 @@ const messages = {
     turnup: 'Turn up the volume to max setting',
   },
   pt: {
+    privacy: 'Politica de Privacidade',
     title: 'Consertar alto-falantes',
     play: 'Começar',
     stop: 'Parar',
@@ -20,6 +22,7 @@ const messages = {
     turnup: 'Aumente o volume para a configuração máxima',
   },
   zh: {
+    privacy: '隐私政策',
     title: '修復揚聲器',
     play: '開始',
     stop: '停止',
@@ -29,6 +32,7 @@ const messages = {
     turnup: '將音量調到最大設置',
   },
   hi: {
+    privacy: 'गोपनीयता नीति',
     title: 'स्पीकर ठीक करें',
     play: 'शुरू',
     stop: 'रोकें',
@@ -38,6 +42,7 @@ const messages = {
     turnup: 'वॉल्यूम को अधिकतम सेटिंग में बदलें',
   },
   ja: {
+    privacy: 'プライバシーポリシー',
     title: 'スピーカーを修理する',
     play: '始める',
     stop: '停止',
