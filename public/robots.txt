@@ -1,0 +1,11 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://fixspeakers.vercel.app/sitemap.xml
+
+Disallow: /privacypolicy.html
+Disallow: /en/privacypolicy.html
+Disallow: /pt/privacypolicy.html
+Disallow: /in/privacypolicy.html
+Disallow: /zh/privacypolicy.html
+Disallow: /jp/privacypolicy.html
